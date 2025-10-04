@@ -1,0 +1,7 @@
+SHELL_NAME := $(shell uname -s)
+CURSES := -lncurses
+ifeq ($(SHELL_NAME),MINGW32_NT-6.1)
+	CURSES = -lpdcurses
+endif
+all:
+	g++ 1_Lab_OC.cpp -o final $(CURSES)
