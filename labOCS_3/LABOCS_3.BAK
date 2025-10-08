@@ -1,0 +1,23 @@
+#include<graphics.h>
+#include<conio.h>
+
+int main(){
+	clrscr();
+	int graph_driver;           /* используемый драйвер	*/
+	int graph_mode;           /* графический режим видеоадаптера */
+	int graph_error_code;  /* внутренний код ошибки	*/
+	graph_driver = DETECT; /* Определение типа видеоадаптера, загрузка подходящего .BGI-драйвера и установка максимального режима. Считается, что драйвер находится на диске d: в директории \bc\bgi. */
+
+	initgraph(&graph_driver, &graph_mode, "c:\\bgi" );
+	/* Определение кода ошибки при выполнении инициализации. */
+	graph_error_code = graphresult( );
+	if(graph_error_code != grOk){
+		cprintf("%c",graph_error_code);
+		getch();
+		return 255;
+	}
+
+	getch();
+	closegraph();
+	return 0;
+}

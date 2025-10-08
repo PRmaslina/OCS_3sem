@@ -1,20 +1,18 @@
 ﻿#include <iostream>
-#include <ncurses.h>
 
 using namespace std;
 
 void cellInt(unsigned long intNumber) {
     unsigned long mask = 1;
     mask <<= sizeof(long) * 8 - 1;
-    attron(COLOR_PAIR(1));
     for (long i = 1; i < sizeof(long) * 8 + 1; ++i, mask >>= 1) {
-        mask & intNumber ? printw("1") : printw("0");
+        cout << mask & intNumber ? '1' : '0';
         if (i == 1 || i % 8 == 0) {
             attron(COLOR_PAIR(2));
-            printw(" ");
+            cout << " ");
         }
     }
-    printw( "\n\n" );
+    cout <<  "\n\n" );
     attron(COLOR_PAIR(4));
     refresh();
 }
@@ -27,19 +25,19 @@ void cellDoub(int doubCellInArrInt[]) {
         mask = 1;
         mask <<= 31;
         for (int i = 1; i < sizeof(int) * 8 + 1; ++i, mask >>= 1) {
-            mask& doubCellInArrInt[sizeof(double) / sizeof(int) - 1 - j] ? printw("1") : printw("0");
+            mask& doubCellInArrInt[sizeof(double) / sizeof(int) - 1 - j] ? '1' : '0';
             elCount++;
             if (elCount == (sizeof(double) / 8) * 12) {
                 attron(COLOR_PAIR(3));
-                printw(" ");
+                cout << " ");
             }
             else if (elCount == 1) {
                 attron(COLOR_PAIR(2));
-                printw(" ");
+                cout << " ");
             }
         }
     }
-    printw( "\n\n");
+    cout <<  "\n\n");
     attron(COLOR_PAIR(4));
     refresh();
 }
@@ -73,30 +71,30 @@ int main()
     };
     setlocale(0, "");
 
-    printw("int: %ld bytes\n", sizeof(int));
-    printw("short int: %ld bytes\n" , sizeof(short int));
-    printw("long int: %ld bytes\n", sizeof(long int));
-    printw("float: %ld bytes\n" , sizeof(float));
-    printw("double: %ld bytes\n" , sizeof(double));
-    printw("long double: %ld bytes\n" , sizeof(long double));
-    printw("char : %ld bytes\n", sizeof(char));
-    printw("bool: %ld bytes\n", sizeof(bool));
+    cout << "int: %ld bytes\n", sizeof(int));
+    cout << "short int: %ld bytes\n" , sizeof(short int));
+    cout << "long int: %ld bytes\n", sizeof(long int));
+    cout << "float: %ld bytes\n" , sizeof(float));
+    cout << "double: %ld bytes\n" , sizeof(double));
+    cout << "long double: %ld bytes\n" , sizeof(long double));
+    cout << "char : %ld bytes\n", sizeof(char));
+    cout << "bool: %ld bytes\n", sizeof(bool));
 
-    printw("\nEnter variable unsigned long: ");
+    cout << "\nEnter variable unsigned long: ");
     refresh();
     scanw("%ld",&intNumber);
-    printw("\n");
+    cout << "\n");
     cellInt(intNumber);
 
     do{
-        printw( "Change bit? (Y/n): ");
+        cout <<  "Change bit? (Y/n): ");
         refresh();
         scanw("%c",&input);
         if (input != 'n'){
-            printw( "\nBit place (right to left): ");
+            cout <<  "\nBit place (right to left): ");
             refresh();
             scanw("%i",&bitID);
-            printw( "\nBit value: ");
+            cout <<  "\nBit value: ");
             refresh();
             scanw("%i",&bitValue);
             maskLong = 1;
@@ -111,27 +109,27 @@ int main()
                     intNumber ^= maskLong;
                 }
             }
-            printw("\n");
+            cout << "\n");
             cellInt(intNumber);
-            printw("Result number: %ld \n\n", intNumber);
+            cout << "Result number: %ld \n\n", intNumber);
             refresh();
         }
     } while (input != 'n');
 
-    printw( "\nEnter variable double: ");
+    cout <<  "\nEnter variable double: ");
     refresh();
     scanw("%lf",&doubNumber);
-    printw("\n");
+    cout << "\n");
     cellDoub(doubCellInArrInt);
     do {
-        printw("Change bit? (Y/n): ");
+        cout << "Change bit? (Y/n): ");
         refresh();
         scanw("%c",&input);
         if (input != 'n') {
-            printw( "\nnBit place (right to left): ");
+            cout <<  "\nnBit place (right to left): ");
             refresh();
             scanw("%i",&bitID);
-            printw( "\nBit value: ");
+            cout <<  "\nBit value: ");
             refresh();
             scanw("%i",&bitValue);
             if (bitID < 32) {
@@ -156,9 +154,9 @@ int main()
                     doubCellInArrInt[0] ^= maskBitID[1];
                 }
             }
-            printw("\n");
+            cout << "\n");
             cellDoub(doubCellInArrInt);
-            printw("\nResult number: %f \n\n", doubNumber);
+            cout << "\nResult number: %f \n\n", doubNumber);
             refresh();
         }
     } while (input != 'n');
