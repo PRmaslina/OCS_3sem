@@ -48,6 +48,7 @@ int main(){
 			cprintf("%s %s\n\r",colorENG[i],colorRUS[j]);
 		}
 	}
+
 	do{
 		input = getch();
 		if(input == 0x48){
